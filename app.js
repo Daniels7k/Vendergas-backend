@@ -13,12 +13,20 @@ mongoose.connect(process.env.MONGOOSE_URL, (error) => {
 })
 
 
+app.use(express.urlencoded({
+    extended: true
+}));
+
+//Rotas
 app.get("/", (req, res) => {
     res.send("Rota principal")
 })
 
 app.use("/usuarios", usuarios)
 
+
+
+//Outros
 PORT = 4000
 app.listen(PORT, () => {
     console.log("Server running on port:", PORT)
