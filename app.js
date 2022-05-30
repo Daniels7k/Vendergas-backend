@@ -3,6 +3,9 @@ const app = express()
 const usuarios = require("./routes/usuario")
 require("dotenv").config()
 const mongoose = require("mongoose")
+const cors = require("cors")
+
+app.use(cors())
 
 //mongoose
 mongoose.connect(process.env.MONGOOSE_URL, (error) => {
@@ -16,6 +19,7 @@ mongoose.connect(process.env.MONGOOSE_URL, (error) => {
 app.use(express.urlencoded({
     extended: true
 }));
+app.use( express.json() )
 
 //Rotas
 app.get("/", (req, res) => {
