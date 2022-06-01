@@ -1,6 +1,6 @@
 const mongoose = require("mongoose")
 require("../models/Usuario")
-const Usuario = mongoose.model("usuario")
+const Usuario = mongoose.model("usuarios")
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcryptjs")
 
@@ -44,7 +44,7 @@ const usuarioController = {
             // Criando Token
             const token = jwt.sign({ id: selectedUser.id, nome: selectedUser.nome }, process.env.TOKEN_SECRET)
 
-            res.status(200).send({ token: token })
+            res.status(200).send({ token: token, id: selectedUser.id })
 
         } catch (error) {
             res.status(500).send(error)

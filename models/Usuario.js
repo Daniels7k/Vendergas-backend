@@ -8,4 +8,4 @@ const Usuario = new Schema ({
     CreatedAt: {type: Date, default: Date.now}
 })
 
-mongoose.model("usuario", Usuario)
+mongoose.model("usuarios", Usuario)
