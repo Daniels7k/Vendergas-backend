@@ -3,6 +3,7 @@ const app = express()
 const usuario = require("./routes/usuario")
 const empresa = require("./routes/empresa")
 const cliente = require("./routes/cliente")
+const produto = require("./routes/produto")
 require("dotenv").config()
 const mongoose = require("mongoose")
 const cors = require("cors")
@@ -31,6 +32,7 @@ app.get("/", (req, res) => {
 app.use("/empresas", empresa)
 app.use("/clientes", cliente)
 app.use("/usuarios", usuario)
+app.use("/produtos", produto)
 
 
 
