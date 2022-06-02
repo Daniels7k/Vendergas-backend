@@ -4,6 +4,9 @@ const usuario = require("./routes/usuario")
 const empresa = require("./routes/empresa")
 const cliente = require("./routes/cliente")
 const produto = require("./routes/produto")
+const pedido = require("./routes/pedidos")
+const authController = require("./controllers/authController")
+
 require("dotenv").config()
 const mongoose = require("mongoose")
 const cors = require("cors")
@@ -24,16 +27,23 @@ app.use(express.urlencoded({
 }));
 app.use( express.json() )
 
+
 //Rotas
 
 app.get("/", (req, res) => {
     res.send("Rota principal")
 })
-app.use("/empresas", empresa)
-app.use("/clientes", cliente)
-app.use("/usuarios", usuario)
-app.use("/produtos", produto)
 
+//Privadas
+
+app.use("/empresas", authController, empresa)
+app.use("/clientes", authController, cliente)
+app.use("/produtos", authController, produto)
+app.use("/pedidos/", authController, pedido)
+
+//Free
+
+app.use("/usuarios", usuario)
 
 
 //Outros

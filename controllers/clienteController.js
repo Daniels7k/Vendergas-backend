@@ -17,18 +17,21 @@ const clienteController = {
     },
 
     create: function (req, res) {
-        try {
-            const cliente = new Cliente({
-                nome: req.body.nome,
-                email: req.body.email,
-                telefone: req.body.telefone,
-                empresa: req.body.empresa,
-                empresaID: req.params.empresaID
-            })
-            
-            const savedCliente = cliente.save()
 
-            res.status(201).send(savedCliente)
+        const cliente = new Cliente({
+            nome: req.body.nome,
+            email: req.body.email,
+            telefone: req.body.telefone,
+            empresa: req.body.empresa,
+            empresaID: req.params.empresaID
+        })
+
+        try {
+            cliente.save().then((savedCliente) => {
+                console.log(savedCliente)
+                res.status(201).send(savedCliente)
+            })
+    
 
         } catch (error) {
             console.log(error)

@@ -44,7 +44,7 @@ const usuarioController = {
             // Criando Token
             const token = jwt.sign({ id: selectedUser.id, nome: selectedUser.nome }, process.env.TOKEN_SECRET)
 
-            res.status(200).send({ token: token, id: selectedUser.id })
+            res.status(200).send({ token: token, id: selectedUser.id, nome: selectedUser.nome })
 
         } catch (error) {
             res.status(500).send(error)
