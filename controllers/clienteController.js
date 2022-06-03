@@ -31,7 +31,7 @@ const clienteController = {
                 console.log(savedCliente)
                 res.status(201).send(savedCliente)
             })
-    
+
 
         } catch (error) {
             console.log(error)
@@ -39,23 +39,35 @@ const clienteController = {
         }
     },
 
-    update: function (req, res)  {
-        Cliente.findOne({_id: req.params.clienteID }).then((cliente) => {
-            cliente.nome = req.body.nome
-            cliente.email = req.body.email
-            cliente.telefone = req.body.telefone
-            cliente.empresa = req.body.empresa
+    update: function (req, res) {
+        try {
+            Cliente.findOne({ _id: req.params.clienteID }).then((cliente) => {
+                cliente.nome = req.body.nome
+                cliente.email = req.body.email
+                cliente.telefone = req.body.telefone
+                cliente.empresa = req.body.empresa
 
-            cliente.save()
+                cliente.save()
 
-            res.status(200).send(cliente)
-        })
+                res.status(200).send(cliente)
+            })
+        } catch (error) {
+            console.log(error)
+            res.status(500).send(error)
+        }
+
     },
 
     delete: function (req, res) {
-        Cliente.findByIdAndDelete({_id: req.params.clienteID}).then((cliente) => {
-            res.status(200).send(cliente)
-        })
+        try {
+            Cliente.findByIdAndDelete({ _id: req.params.clienteID }).then((cliente) => {
+                res.status(200).send(cliente)
+            })
+        } catch (error) {
+            console.log(error)
+            res.status(500).send(error)
+        }
+
     }
 }
 

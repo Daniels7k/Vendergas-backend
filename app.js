@@ -47,7 +47,7 @@ app.use("/usuarios", usuario)
 
 
 //Outros
-PORT = 4000
+PORT = 4000 || process.env.PORT
 app.listen(PORT, () => {
     console.log("Server running on port:", PORT)
 } )

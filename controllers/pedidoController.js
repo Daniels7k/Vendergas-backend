@@ -10,9 +10,15 @@ const Pedido = mongoose.model("pedidos")
 const pedidoController = {
 
     index: function (req, res) {
-        Pedido.find({empresaID: req.params.empresaID}).then((empresa) => {
-            res.status(200).send(empresa)
-        })
+        try {
+            Pedido.find({ empresaID: req.params.empresaID }).then((empresa) => {
+                res.status(200).send(empresa)
+            })
+        } catch (error) {
+            console.log(error)
+            res.status(500).send(error)
+        }
+
     },
 
     create: function (req, res) {
@@ -26,17 +32,28 @@ const pedidoController = {
             observacao: req.body.observacao,
             data: req.body.data
         })
+        try {
+            pedido.save()
 
-        pedido.save()
+            res.status(201).send(pedido)
+        } catch (error) {
+            console.log(error)
+            res.status(500).send(error)
+        }
 
-        res.status(201).send(pedido)
     },
 
 
     delete: function (req, res) {
-        Pedido.findByIdAndDelete({_id: req.params.pedidoID}).then((pedido) => {
-            res.status(200).send(pedido)
-        })
+        try {
+            Pedido.findByIdAndDelete({ _id: req.params.pedidoID }).then((pedido) => {
+                res.status(200).send(pedido)
+            })
+        } catch (error) {
+            console.log(error)
+            res.status(500).send(error)
+        }
+
     }
 }
 

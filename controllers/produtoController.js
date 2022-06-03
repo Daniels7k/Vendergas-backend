@@ -6,9 +6,15 @@ const Produto = mongoose.model("produtos")
 const produtoController = {
 
     index: function (req, res) {
-        Produto.find({empresaID: req.params.empresaID}).then((produto) => {
-            res.status(200).send(produto)
-        })
+        try {
+            Produto.find({ empresaID: req.params.empresaID }).then((produto) => {
+                res.status(200).send(produto)
+            })
+        } catch (error) {
+            console.log(error)
+            res.status(500).send(error)
+        }
+
     },
 
     create: function (req, res) {
@@ -21,28 +27,44 @@ const produtoController = {
             empresaID: req.params.empresaID
         })
 
-        const savedProduto = produto.save()
+        try {
+            const savedProduto = produto.save()
 
-        res.status(201).send(savedProduto)
+            res.status(201).send(savedProduto)
+        } catch (error) {
+            console.log(error)
+            res.status(500).send(error)
+        }
     },
 
     put: function (req, res) {
-        Produto.findOne({produtoID: req.params.produtoID}).then((produto) => {
+
+        Produto.findOne({ produtoID: req.params.produtoID }).then((produto) => {
             produto.nome = req.body.nome
             produto.descricao = req.body.descricao
             produto.empresa = req.body.empresa
             produto.valor = req.body.valor
 
-            produto.save()
-
-            res.status(200).send(produto)
+            try {
+                produto.save()
+                res.status(200).send(produto)
+            } catch (error) {
+                console.log(error)
+                res.status(500).send(error)
+            }
         })
+
     },
 
     delete: function (req, res) {
-        Produto.findByIdAndRemove({_id: req.params.produtoID}).then((response) => {
-            res.status(200).send(response)
-        })
+        try {
+            Produto.findByIdAndRemove({ _id: req.params.produtoID }).then((response) => {
+                res.status(200).send(response)
+            })
+        } catch (error) {
+            console.log(error)
+            res.status(500).send(error)
+        }
     }
 }
 

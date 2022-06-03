@@ -27,7 +27,7 @@ const empresaController = {
                 cnpj: req.body.cnpj,
                 userOwner: req.params.userID
             })
-            
+
             const savedEmpresa = empresa.save()
 
             res.status(201).send(savedEmpresa)
@@ -42,23 +42,34 @@ const empresaController = {
     },
 
     put: (req, res) => {
+        try {
+            Empresa.findOne({ _id: req.params.empresaID }).then((empresa) => {
 
-        Empresa.findOne ({_id: req.params.empresaID}).then((empresa) => {
-  
-            empresa.nomeFantasia = req.body.nomeFantasia
-            empresa.razaoSocial = req.body.razaoSocial
-            empresa.cnpj = req.body.cnpj
+                empresa.nomeFantasia = req.body.nomeFantasia
+                empresa.razaoSocial = req.body.razaoSocial
+                empresa.cnpj = req.body.cnpj
 
-            empresa.save()
-            res.status(200).send(empresa)
-        })
+                empresa.save()
+                res.status(200).send(empresa)
+            })
+        } catch (error) {
+            console.log(error)
+            res.status(500).send(error)
+        }
+
     },
 
 
     delete: (req, res) => {
-        Empresa.findByIdAndDelete({_id: req.params.empresaID}).then((empresa) => {
-            res.status(200).send(empresa)
-        })
+        try {
+            Empresa.findByIdAndDelete({ _id: req.params.empresaID }).then((empresa) => {
+                res.status(200).send(empresa)
+            })
+        } catch (error) {
+            console.log(error)
+            res.status(500).send(error)
+        }
+
     }
 }
 
