@@ -6,7 +6,8 @@ module.exports = function (req, res, next) {
     if(!authorization) return res.status(401).send("Acess Denied")
 
    
-    const token = JSON.parse(authorization)
+    const token =  authorization.replace(/"/g, '')
+
     try {
 
         jwt.verify(token, process.env.TOKEN_SECRET)
