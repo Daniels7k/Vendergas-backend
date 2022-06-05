@@ -8,7 +8,7 @@ const Pedido = new Schema ({
     quantidadeProduto: {type: String, required: true},
     empresa: {type: String, required: true},
     empresaID: {type: String, required: true},
-    observacao: {type: String, required: true},
+    observacao: {type: String, required: false},
     data: {type: String, required: true}
     
 })

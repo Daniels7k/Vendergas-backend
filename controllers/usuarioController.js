@@ -35,11 +35,11 @@ const usuarioController = {
         try {
             //Verificando preexistencia no BD
             const selectedUser = await Usuario.findOne({ email: req.body.email })
-            if (!selectedUser) return res.status(400).send({ errors: "email ou senha incorretos!" })
+            if (!selectedUser) return res.status(400).send({message: "Este email, não esta cadastrado!" })
 
             //Verificando Hash
             const passwordAndUserMatch = bcrypt.compareSync(req.body.senha, selectedUser.senha)
-            if (!passwordAndUserMatch) return res.status(400).send({ errors: "email ou senha incorretos!" })
+            if (!passwordAndUserMatch) return res.status(400).send({message: "Email ou senha incorretos!" })
 
             // Criando Token
             const token = jwt.sign({ id: selectedUser.id, nome: selectedUser.nome }, process.env.TOKEN_SECRET)
@@ -47,7 +47,7 @@ const usuarioController = {
             res.status(200).send({ token: token, id: selectedUser.id, nome: selectedUser.nome })
 
         } catch (error) {
-            res.status(500).send(error)
+            res.status(500).send(error, {message: "Email ou senha incorretos!"})
         }
 
     }

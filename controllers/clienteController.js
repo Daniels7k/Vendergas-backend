@@ -28,7 +28,6 @@ const clienteController = {
 
         try {
             cliente.save().then((savedCliente) => {
-                console.log(savedCliente)
                 res.status(201).send(savedCliente)
             })
 
